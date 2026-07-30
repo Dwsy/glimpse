@@ -1,0 +1,61 @@
+{
+  "$schema": "https://www.raycast.com/schemas/extension.json",
+  "name": "glimpse-windows",
+  "title": "Glimpse",
+  "description": "Glimpse windows + portable GAPP browser (by project, history, isolated runner)",
+  "icon": "icon.png",
+  "author": "dwsy",
+  "categories": ["Productivity", "Developer Tools"],
+  "license": "MIT",
+  "platforms": ["macOS"],
+  "commands": [
+    {
+      "name": "browse-gapps",
+      "title": "Browse GAPPs",
+      "description": "GAPPs by project — open, history, enable/archive (no Pi required)",
+      "mode": "view",
+      "keywords": ["gapp", "glimpse", "project", "history", "app"]
+    },
+    {
+      "name": "run-gapp",
+      "title": "Run Last GAPP",
+      "description": "Open the most recently run GAPP with isolated SDK runner",
+      "mode": "no-view",
+      "keywords": ["gapp", "run", "open"]
+    },
+    {
+      "name": "list-windows",
+      "title": "Switch Glimpse Window",
+      "description": "Browse open Glimpse windows and activate one",
+      "mode": "view",
+      "keywords": ["glimpse", "window", "switch", "focus", "webview"]
+    },
+    {
+      "name": "focus-active",
+      "title": "Focus Active Glimpse Window",
+      "description": "Bring the key Glimpse window to the front",
+      "mode": "no-view",
+      "keywords": ["glimpse", "focus"]
+    }
+  ],
+  "dependencies": {
+    "@raycast/api": "^1.83.0",
+    "@raycast/utils": "^1.17.0"
+  },
+  "devDependencies": {
+    "@types/node": "20.8.10",
+    "@types/react": "18.2.79",
+    "react": "19.0.0",
+    "typescript": "5.4.5"
+  },
+  "scripts": {
+    "build": "ray build -e dist -o dist && node scripts/sync-root-executables.mjs",
+    "dev": "ray develop",
+    "lint": "ray lint",
+    "fix-lint": "ray lint --fix",
+    "prepare-import": "npm install && npm run build"
+  },
+  "overrides": {
+    "@types/react": "18.2.79"
+  }
+}

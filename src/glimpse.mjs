@@ -72,6 +72,16 @@ export function getNativeHostInfo() {
 
 export { getFollowCursorSupport, supportsFollowCursor };
 
+const IMK_RUN_LOOP_WARNING = 'error messaging the mach port for IMKCFRunLoopWakeUpReliable';
+
+function forwardNativeStderr(proc) {
+  const rl = createInterface({ input: proc.stderr, crlfDelay: Infinity });
+  rl.on('line', (line) => {
+    if (line.includes(IMK_RUN_LOOP_WARNING)) return;
+    process.stderr.write(`${line}\n`);
+  });
+}
+
 // ---------------------------------------------------------------------------
 // Shared multi-window host (macOS) — one Dock icon, many windows
 // ---------------------------------------------------------------------------
@@ -80,11 +90,14 @@ export { getFollowCursorSupport, supportsFollowCursor };
 let sharedHost = null;
 
 function shouldUseSharedHost(options = {}) {
+  // Shared host is opt-in: quieter default (no --host process / control socket
+  // lifecycle noise). Enable with options.shared or GLIMPSE_SHARED=1.
   if (process.env.GLIMPSE_ISOLATED === '1') return false;
   if (process.platform !== 'darwin') return false;
   // Accessory-style windows stay isolated (no Dock tile / separate lifecycle).
   if (options.clickThrough || options._isolated) return false;
-  return true;
+  if (options.shared === true || process.env.GLIMPSE_SHARED === '1') return true;
+  return false;
 }
 
 function ensureSharedHost() {
@@ -94,9 +107,10 @@ function ensureSharedHost() {
 
   const host = ensureBinary();
   const proc = spawn(host.path, ['--host'], {
-    stdio: ['pipe', 'pipe', 'inherit'],
+    stdio: ['pipe', 'pipe', 'pipe'],
     windowsHide: false,
   });
+  forwardNativeStderr(proc);
 
   const state = {
     proc,
@@ -180,6 +194,7 @@ function optionsToOpenPayload(id, options = {}) {
   if (options.autoClose) payload.autoClose = true;
   if (options.openLinks) payload.openLinks = true;
   if (options.openLinksApp) payload.openLinksApp = options.openLinksApp;
+  if (options.findInPage === true) payload.findInPage = true;
   if (options.x != null) payload.x = options.x;
   if (options.y != null) payload.y = options.y;
   if (options.followCursor && supportsFollowCursor()) payload.followCursor = true;
@@ -289,9 +304,8 @@ class GlimpseWindow extends EventEmitter {
       this.#closed = true;
       if (this.#shared && this.#id && sharedHost) {
         sharedHost.windows.delete(this.#id);
-        if (sharedHost.windows.size === 0) {
-          // Leave host process alive briefly for reuse; kill on process exit.
-        }
+        // Host process exits on last window close (clears Dock icon).
+        // ensureSharedHost() re-spawns on the next open().
       }
       this.emit('closed');
     }
@@ -403,6 +417,9 @@ function openIsolated(html, options = {}) {
   if (options.hidden) args.push('--hidden');
   if (options.autoClose) args.push('--auto-close');
 
+  const supportsFindInPage = host.platform === 'darwin' || host.platform === 'override';
+  if (options.findInPage === true && supportsFindInPage) args.push('--find-in-page');
+
   const supportsOpenLinks = host.platform === 'darwin' || host.platform === 'override';
   if (options.openLinks && supportsOpenLinks) args.push('--open-links');
   if (options.openLinksApp && supportsOpenLinks) args.push('--open-links-app', options.openLinksApp);
@@ -424,9 +441,10 @@ function openIsolated(html, options = {}) {
 
   const spawnArgs = [...(host.extraArgs || []), ...args];
   const proc = spawn(host.path, spawnArgs, {
-    stdio: ['pipe', 'pipe', 'inherit'],
+    stdio: ['pipe', 'pipe', 'pipe'],
     windowsHide: process.platform === 'win32',
   });
+  forwardNativeStderr(proc);
   return new GlimpseWindow(proc, html, { shared: false });
 }
 
@@ -460,7 +478,8 @@ export function statusItem(html, options = {}) {
   if (options.title != null) args.push('--title', options.title);
 
   const spawnArgs = [...(host.extraArgs || []), ...args];
-  const proc = spawn(host.path, spawnArgs, { stdio: ['pipe', 'pipe', 'inherit'] });
+  const proc = spawn(host.path, spawnArgs, { stdio: ['pipe', 'pipe', 'pipe'] });
+  forwardNativeStderr(proc);
   return new GlimpseStatusItem(proc, html, { shared: false });
 }
 

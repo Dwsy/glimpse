@@ -75,6 +75,7 @@ win.close();                         // close window
   cursorOffset: {x, y},   // offset from cursor (default: 20, -20)
   openLinks: true,        // open clicked http/https links in default browser
   openLinksApp: '/Applications/Google Chrome.app', // optional app bundle path
+  findInPage: true,       // enable Cmd+F in-page search (default: false, macOS)
   autoClose: true,        // close after first message
   x, y,                   // exact screen position
   timeout,                // for prompt() only — ms before rejecting
@@ -115,6 +116,21 @@ win.info.appearance.darkMode
 window.glimpse.send(data)  // send data to Node (any JSON-serializable value)
 window.glimpse.close()     // close the window from JS
 ```
+
+
+### macOS Glaze-compatible native dialogs
+
+Inside a page opened by the macOS Glimpse host, the following Promise APIs are available:
+
+```js
+window.glazeAPI.dialog.showOpenDialog(options);
+window.glazeAPI.dialog.showSaveDialog(options);
+window.glazeAPI.dialog.showMessageBox(options);
+window.glazeAPI.dialog.showErrorBox(title, content);
+```
+
+They open real AppKit sheets attached to that Glimpse window. Use them when a generated GAPP expects the Glaze scaffolded preload contract. Do not assume these methods exist on the Linux or Windows hosts.
+
 
 ---
 

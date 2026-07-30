@@ -52,6 +52,8 @@ function writeMockBinary() {
     "const readline = require('node:readline');",
     "const argsPath = process.env.GLIMPSE_OPEN_LINKS_ARGS;",
     "if (argsPath) fs.writeFileSync(argsPath, JSON.stringify(process.argv.slice(2)));",
+    "process.stderr.write('2026-07-30 glimpse[1:1] error messaging the mach port for IMKCFRunLoopWakeUpReliable\\n');",
+    "process.stderr.write('[glimpse] expected diagnostic\\n');",
     `process.stdout.write(${JSON.stringify(protocolReady)} + '\\n');`,
     'let sentFinalReady = false;',
     'const rl = readline.createInterface({ input: process.stdin, crlfDelay: Infinity });',
@@ -85,21 +87,42 @@ async function openMockWindow(options) {
   return JSON.parse(readFileSync(argsPath, 'utf8'));
 }
 
+async function captureStderr(run) {
+  const originalWrite = process.stderr.write;
+  let captured = '';
+  process.stderr.write = (chunk) => {
+    captured += String(chunk);
+    return true;
+  };
+  try {
+    await run();
+    return captured;
+  } finally {
+    process.stderr.write = originalWrite;
+  }
+}
+
 try {
   writeMockBinary();
   process.env.GLIMPSE_BINARY_PATH = mockBinary;
   process.env.GLIMPSE_OPEN_LINKS_ARGS = argsPath;
 
-  let args = await openMockWindow({ openLinks: true });
-  if (!args.includes('--open-links')) fail('expected --open-links flag');
-  if (args.includes('--open-links-app')) fail('did not expect --open-links-app when only openLinks=true');
-  pass('mapped openLinks -> --open-links');
+  const stderr = await captureStderr(async () => {
+    let args = await openMockWindow({ openLinks: true });
+    if (!args.includes('--open-links')) fail('expected --open-links flag');
+    if (args.includes('--open-links-app')) fail('did not expect --open-links-app when only openLinks=true');
+    pass('mapped openLinks -> --open-links');
 
-  args = await openMockWindow({ openLinksApp: APP_PATH });
-  if (!args.includes('--open-links-app')) fail('expected --open-links-app flag');
-  if (!args.includes(APP_PATH)) fail(`expected custom app path argument (${APP_PATH})`);
-  if (args.includes('--open-links')) fail('did not expect explicit --open-links when only openLinksApp is set');
-  pass('mapped openLinksApp -> --open-links-app');
+    args = await openMockWindow({ openLinksApp: APP_PATH });
+    if (!args.includes('--open-links-app')) fail('expected --open-links-app flag');
+    if (!args.includes(APP_PATH)) fail(`expected custom app path argument (${APP_PATH})`);
+    if (args.includes('--open-links')) fail('did not expect explicit --open-links when only openLinksApp is set');
+    pass('mapped openLinksApp -> --open-links-app');
+  });
+
+  if (stderr.includes('IMKCFRunLoopWakeUpReliable')) fail('expected IMK warning to be suppressed');
+  if (!stderr.includes('[glimpse] expected diagnostic')) fail('expected normal native stderr to be forwarded');
+  pass('suppressed IMK warning without hiding diagnostics');
 
   pass('open-links args mapping verified');
   console.log('\nopen-links test passed');

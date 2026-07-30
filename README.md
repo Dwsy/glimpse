@@ -13,6 +13,40 @@ Glimpse opens a native WebView window and speaks a bidirectional JSON Lines prot
 | Linux | Chromium CDP (zero-compile) | Any Chromium-based browser |
 | Windows | .NET 8 + WebView2 | .NET 8 SDK, Edge WebView2 Runtime |
 
+
+## Glaze-compatible native dialogs on macOS
+
+Pages hosted by the macOS Glimpse runtime can call the scaffolded Glaze dialog surface directly:
+
+```js
+const opened = await window.glazeAPI.dialog.showOpenDialog({
+  title: "Choose files",
+  properties: ["openFile", "multiSelections"],
+  filters: [{ name: "Text", extensions: ["txt", "md"] }],
+});
+
+const saved = await window.glazeAPI.dialog.showSaveDialog({
+  defaultPath: "/tmp/output.txt",
+});
+
+const answer = await window.glazeAPI.dialog.showMessageBox({
+  type: "question",
+  message: "Continue?",
+  buttons: ["Cancel", "Continue"],
+  defaultId: 1,
+});
+
+await window.glazeAPI.dialog.showErrorBox("Build failed", "See the log for details.");
+```
+
+The runtime uses `NSOpenPanel`, `NSSavePanel`, and `NSAlert` sheets attached to the invoking window. Open/save results follow the Glaze SDK shapes, message boxes return `{ response, checkboxChecked }`, and only one native sheet may be active per window. This bridge is currently a macOS host capability, not a cross-platform Glimpse API guarantee.
+
+Run the real AppKit/Accessibility regression with:
+
+```bash
+npm run test:native-dialog-e2e
+```
+
 ## Install
 
 ```bash
@@ -69,6 +103,7 @@ Glimpse supports several window style flags that can be combined freely:
 | `floating` | Always on top of other windows |
 | `transparent` | Clear window background — HTML body needs `background: transparent` |
 | `clickThrough` | Window ignores all mouse events |
+| `findInPage` | Enables native Cmd+F / Cmd+G in-page search on macOS (default: `false`) |
 
 Common combinations:
 

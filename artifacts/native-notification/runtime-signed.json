@@ -1,0 +1,17 @@
+{
+  "result": "FAIL",
+  "title": "OpenGlaze Notification E2E 1785147987446-64617",
+  "notificationId": "openglaze-notification-1785147987446-64617",
+  "events": [
+    {
+      "nativeNotificationE2E": "failed",
+      "payload": {
+        "error": "Notifications are not allowed for this application",
+        "type": "failed"
+      }
+    }
+  ],
+  "ready": true,
+  "error": "Error: Native notification failed: Notifications are not allowed for this application\n    at file:///Users/dengwenyu/Dev/AI/glimpse/test/native-notification-e2e.mjs:42:11\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)",
+  "completedAt": "2026-07-27T10:26:34.607Z"
+}

@@ -8,7 +8,9 @@
     ".": "./src/glimpse.mjs"
   },
   "bin": {
-    "glimpseui": "bin/glimpse.mjs"
+    "glimpseui": "bin/glimpse.mjs",
+    "glimpse-ctl": "bin/glimpse-ctl.mjs",
+    "gapp": "gapp-sdk/bin/gapp.mjs"
   },
   "scripts": {
     "build": "node scripts/build.mjs",
@@ -16,20 +18,29 @@
     "build:linux": "node scripts/build.mjs linux",
     "build:windows": "node scripts/build.mjs win32",
     "postinstall": "node scripts/postinstall.mjs",
-    "test": "node test/test.mjs && node test/open-links.test.mjs && node test/test-status-item.mjs",
+    "test": "node --test gapp-sdk/src/storage.test.mjs gapp-sdk/src/runner.test.mjs && node test/test.mjs && node test/open-links.test.mjs && node test/native-theme-bridge.test.mjs && node test/native-menu-bridge.test.mjs && node test/native-image-bridge.test.mjs && node test/native-dialog-bridge.test.mjs && node test/native-notification-bridge.test.mjs && node test/native-date-picker-bridge.test.mjs && node test/native-tooltip-bridge.test.mjs && node test/window-drag-bridge.test.mjs && node test/fullscreen-toolbar.test.mjs && node test/find-in-page.test.mjs && node test/test-status-item.mjs",
     "test:platform": "node test/platform.mjs",
     "publish:check": "./scripts/publish.sh --dry-run",
-    "publish:npm": "./scripts/publish.sh"
+    "publish:npm": "./scripts/publish.sh",
+    "test:native-dialog-e2e": "./test/native-dialog-e2e.sh",
+    "test:native-notification": "node test/native-notification-bridge.test.mjs",
+    "test:native-notification-e2e": "./test/native-notification-e2e.sh"
   },
   "files": [
     "src/glimpse.swift",
     "src/glimpse.mjs",
     "src/follow-cursor-support.mjs",
+    "src/chromium-backend.mjs",
     "src/linux/",
     "src/windows/",
     "bin/glimpse.mjs",
+    "bin/glimpse-ctl.mjs",
+    "src/control-client.mjs",
     "scripts/build.mjs",
     "scripts/postinstall.mjs",
+    "assets/AppIcon.icns",
+    "assets/AppIcon-1024.png",
+    "assets/Info.plist",
     "pi-extension/index.ts",
     "pi-extension/companion.mjs",
     "pi-extension/socket-path.mjs",

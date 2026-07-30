@@ -1,5 +1,13 @@
 # Changelog
 
+
+## Unreleased
+
+### Added
+
+- Added a Glaze-compatible macOS native dialog bridge for `showOpenDialog`, `showSaveDialog`, `showMessageBox`, and `showErrorBox`. Dialogs are AppKit sheets attached to the invoking window, with per-window concurrency guards, file filters, default paths, optional security-scoped bookmarks, button indices, and checkbox results.
+- Added static bridge coverage plus a real AppKit/Accessibility E2E that presses alert buttons and cancels open/save panels without writing user files.
+
 ## 0.6.1
 
 - **Change**: Companion is now hidden by default — enable it with `/companion`. Previously it was shown by default. Existing preferences in `~/.pi/companion.json` are respected.

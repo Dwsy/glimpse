@@ -1,0 +1,2324 @@
+{
+  "label" : "errorBox",
+  "nodes" : [
+    {
+      "description" : "",
+      "role" : "AXWindow",
+      "subrole" : "AXStandardWindow",
+      "title" : "OpenGlaze Native Dialog E2E 55795",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuBar",
+      "subrole" : "",
+      "title" : "",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXGroup",
+      "subrole" : "",
+      "title" : "",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXButton",
+      "subrole" : "AXCloseButton",
+      "title" : "",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXButton",
+      "subrole" : "AXZoomButton",
+      "title" : "",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXButton",
+      "subrole" : "AXMinimizeButton",
+      "title" : "",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXStaticText",
+      "subrole" : "",
+      "title" : "",
+      "value" : "OpenGlaze Native Dialog E2E 55795"
+    },
+    {
+      "description" : "alert",
+      "role" : "AXSheet",
+      "subrole" : "",
+      "title" : "",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuBarItem",
+      "subrole" : "",
+      "title" : "Apple",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuBarItem",
+      "subrole" : "",
+      "title" : "Glimpse",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuBarItem",
+      "subrole" : "",
+      "title" : "Edit",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuBarItem",
+      "subrole" : "",
+      "title" : "View",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuBarItem",
+      "subrole" : "",
+      "title" : "Window",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXGroup",
+      "subrole" : "",
+      "title" : "",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXGroup",
+      "subrole" : "",
+      "title" : "",
+      "value" : ""
+    },
+    {
+      "description" : "Glimpse critical alert",
+      "role" : "AXImage",
+      "subrole" : "",
+      "title" : "",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXStaticText",
+      "subrole" : "",
+      "title" : "",
+      "value" : "OpenGlaze Error Box"
+    },
+    {
+      "description" : "",
+      "role" : "AXStaticText",
+      "subrole" : "",
+      "title" : "",
+      "value" : "Native NSAlert error sheet verification"
+    },
+    {
+      "description" : "",
+      "role" : "AXButton",
+      "subrole" : "",
+      "title" : "OK",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenu",
+      "subrole" : "",
+      "title" : "",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenu",
+      "subrole" : "",
+      "title" : "",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenu",
+      "subrole" : "",
+      "title" : "",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenu",
+      "subrole" : "",
+      "title" : "",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenu",
+      "subrole" : "",
+      "title" : "",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXScrollArea",
+      "subrole" : "",
+      "title" : "",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "关于本机",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "系统信息",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "系统设置…",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "App Store…, 20项更新",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "最近使用的项目",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "强制退出…",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "强制退出“Glimpse”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "睡眠",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "重启…",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "重启",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "关机…",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "关机",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "锁屏",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "退出登录“邓文宇”…",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "退出登录“邓文宇”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Hide OpenGlaze Native Dialog E2E 55795",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Hide Others",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Show All",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Quit OpenGlaze Native Dialog E2E 55795",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Quit and Keep Windows",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Undo",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Redo",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Cut",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Copy",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Paste",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Select All",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "AutoFill",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Start Dictation",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Emoji & Symbols",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Show Tab Bar",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Show All Tabs",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Reload Page",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Show Web Inspector",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Enter Full Screen",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Fill",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Center",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Move & Resize",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Full Screen Tile",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Move to 24B1W1",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Move All to 24B1W1",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Remove Window from Set",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Close",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Close All",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Minimize",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Minimize All",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Show Previous Tab",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Show Next Tab",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Move Tab to New Window",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Merge All Windows",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "OpenGlaze Native Dialog E2E 55795",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXWebArea",
+      "subrole" : "",
+      "title" : "",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenu",
+      "subrole" : "",
+      "title" : "",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenu",
+      "subrole" : "",
+      "title" : "",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenu",
+      "subrole" : "",
+      "title" : "",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXHeading",
+      "subrole" : "",
+      "title" : "Native Dialog E2E",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "应用程序",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "词典.app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“词典.app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "电话.app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“电话.app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "访达.app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“访达.app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "归档实用工具.app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“归档实用工具.app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "活动监视器.app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“活动监视器.app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "天气.app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“天气.app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "网易云音乐.app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“网易云音乐.app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "微信.app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“微信.app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "微信读书.app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“微信读书.app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "文本编辑.app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“文本编辑.app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "系统设置.app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“系统设置.app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "音乐.app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“音乐.app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "预览.app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“预览.app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Android Studio.app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“Android Studio.app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Apifox.app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“Apifox.app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Arc.app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“Arc.app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "ChatGPT.app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“ChatGPT.app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Clash Verge.app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“Clash Verge.app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Claude Usage.app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“Claude Usage.app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "cmux.app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“cmux.app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "CotEditor.app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“CotEditor.app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Cursor.app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“Cursor.app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Devin.app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“Devin.app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Dia.app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“Dia.app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "FindDiskKiller.app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“FindDiskKiller.app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "flyChat.app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“flyChat.app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Ghostty.app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“Ghostty.app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Glaze.app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“Glaze.app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Glimpse.app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“Glimpse.app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Google Chrome.app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“Google Chrome.app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "IntelliJ IDEA.app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“IntelliJ IDEA.app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "iPhone镜像.app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“iPhone镜像.app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "iTerm.app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“iTerm.app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Microsoft Edge.app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“Microsoft Edge.app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Notedrafts.app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“Notedrafts.app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "OrbStack.app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“OrbStack.app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Orca.app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“Orca.app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Otty.app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“Otty.app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Pi Session Manager.app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“Pi Session Manager.app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "QQ.app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“QQ.app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Radius Match Probe.app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“Radius Match Probe.app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Radius Match.app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“Radius Match.app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Shadowrocket.app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“Shadowrocket.app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "T3 Code (Alpha).app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“T3 Code (Alpha).app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "ToDesk.app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“ToDesk.app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "UU远程.app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“UU远程.app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Visual Studio Code.app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“Visual Studio Code.app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "WorkBuddy.app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“WorkBuddy.app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "WPS Office.app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“WPS Office.app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Zed.app",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“Zed.app”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "文稿",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "2",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“2”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "0423",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“0423”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "2026-07-26-dyncode-local-productization-worklog.md",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“2026-07-26-dyncode-local-productization-worklog.md”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "20260723-租赁订单按归还进度展示与筛选.md",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“20260723-租赁订单按归还进度展示与筛选.md”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "20260724-7.17-lockers-center-feedback.docx",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“20260724-7.17-lockers-center-feedback.docx”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "20260724-7.17-lockers-center-feedback.md",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“20260724-7.17-lockers-center-feedback.md”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "崩溃日子",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“崩溃日子”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "订单管理_20260725_101711.xlsx",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“订单管理_20260725_101711.xlsx”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "订单管理_20260725_112221.xlsx",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“订单管理_20260725_112221.xlsx”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "使用文档.md",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“使用文档.md”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "输出速度测试.md",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“输出速度测试.md”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "未命名.txt",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“未命名.txt”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "agent",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“agent”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "bestwond",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“bestwond”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "bw-platform",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“bw-platform”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "CHANGELOG.MD",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“CHANGELOG.MD”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "config",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“config”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "config.json",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“config.json”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "config.json",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“config.json”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "dengwenyu",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“dengwenyu”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "gapp-context-tool-injection-pipeline.html",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“gapp-context-tool-injection-pipeline.html”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "gpi",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“gpi”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "gptxpi.json",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“gptxpi.json”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "grok-pi-herdr.zh-CN.md",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“grok-pi-herdr.zh-CN.md”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Jly",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“Jly”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "kanban08_project_retrospective_and_lessons.docx",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“kanban08_project_retrospective_and_lessons.docx”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "kanban08_project_retrospective_and_lessons.txt",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“kanban08_project_retrospective_and_lessons.txt”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "LanguageRecordList.vue",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“LanguageRecordList.vue”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "list-windows.tsx",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“list-windows.tsx”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "main-window.html",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“main-window.html”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "main-window.html",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“main-window.html”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "models.json",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“models.json”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "original-dark-active-menu-closed.png",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“original-dark-active-menu-closed.png”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "pi-branch-atlas-v1-source",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“pi-branch-atlas-v1-source”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "pi-coding-agent",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“pi-coding-agent”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "pi-grok-build",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“pi-grok-build”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "pi-profile-2026-07-23T23-55-49-dengwenyu_Dev_AI_pi-grok-build.txt",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“pi-profile-2026-07-23T23-55-49-dengwenyu_Dev_AI_pi-grok-build.txt”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "pi-rpc-stderr.log",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“pi-rpc-stderr.log”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "pi-session-manager",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“pi-session-manager”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "plus-26.json",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“plus-26.json”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "ponytail-main",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“ponytail-main”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "raycast-extension",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“raycast-extension”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "settings-window.html",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“settings-window.html”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "settings.json",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“settings.json”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "springboot-herdr.py",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“springboot-herdr.py”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "StrategyList.vue",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“StrategyList.vue”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Windows 11.pvm",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“Windows 11.pvm”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "wpdoc",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“wpdoc”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "x.js",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“x.js”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "x.js",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "在访达中显示“x.js”",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "服务器",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "清除菜单",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Contact…",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Passwords…",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Credit Card…",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Halves",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Left",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Right",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Top",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Bottom",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Quarters",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Top Left",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Top Right",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Bottom Left",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Bottom Right",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Arrange",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Left & Right",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Left & Quarters",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Right & Left",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Right & Quarters",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Top & Bottom",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Top & Quarters",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Bottom & Top",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Bottom & Quarters",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Quarters",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXMenuItem",
+      "subrole" : "",
+      "title" : "Return to Previous Size",
+      "value" : ""
+    },
+    {
+      "description" : "",
+      "role" : "AXStaticText",
+      "subrole" : "",
+      "title" : "",
+      "value" : "Native Dialog E2E"
+    }
+  ],
+  "pid" : 55801,
+  "trusted" : true
+}

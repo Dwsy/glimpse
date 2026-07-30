@@ -53,7 +53,13 @@ function packageMacApp() {
     copyFileSync(pngSrc, join(resources, 'AppIcon-1024.png'));
   }
 
-  console.log('Packaged src/Glimpse.app (Dock icon + multi-window host)');
+  // Sign the complete bundle, not only the linker-produced Mach-O. This binds
+  // Info.plist/resources to CFBundleIdentifier so macOS services such as
+  // UserNotifications recognize the process as the app bundle.
+  run('/usr/bin/codesign', ['--force', '--deep', '--sign', '-', '--timestamp=none', app]);
+  run('/usr/bin/codesign', ['--verify', '--deep', '--strict', '--verbose=2', app]);
+
+  console.log('Packaged and ad-hoc signed src/Glimpse.app (Dock icon + multi-window host)');
 }
 
 switch (target) {

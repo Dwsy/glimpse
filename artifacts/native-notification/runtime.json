@@ -1,0 +1,17 @@
+{
+  "result": "FAIL",
+  "title": "OpenGlaze Notification E2E 1785148434786-68535",
+  "notificationId": "openglaze-notification-1785148434786-68535",
+  "events": [
+    {
+      "nativeNotificationE2E": "failed",
+      "payload": {
+        "error": "Native notification was not delivered",
+        "type": "failed"
+      }
+    }
+  ],
+  "ready": true,
+  "error": "Error: Native notification failed: Native notification was not delivered\n    at file:///Users/dengwenyu/Dev/AI/glimpse/test/native-notification-e2e.mjs:42:11\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)",
+  "completedAt": "2026-07-27T10:33:59.186Z"
+}

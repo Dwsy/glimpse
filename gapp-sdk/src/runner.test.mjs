@@ -1,0 +1,119 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import vm from "node:vm";
+import { createServer } from "node:http";
+import { injectGappRuntime } from "./storage.mjs";
+import { attachMessageRouter, gappWindowOptions } from "./runner.mjs";
+
+test("GAPP window metadata reaches Glimpse open options", () => {
+  assert.deepEqual(
+    gappWindowOptions(
+      {
+        width: 1180,
+        height: 820,
+        transparent: true,
+        frameless: false,
+        floating: true,
+        clickThrough: true,
+        autoClose: true,
+        openLinks: true,
+        openLinksApp: "/Applications/Safari.app",
+      },
+      "Glaze SDK Gallery",
+    ),
+    {
+      width: 1180,
+      height: 820,
+      title: "Glaze SDK Gallery",
+      frameless: false,
+      transparent: true,
+      floating: true,
+      clickThrough: true,
+      autoClose: true,
+      openLinks: true,
+      openLinksApp: "/Applications/Safari.app",
+    },
+  );
+});
+
+async function waitFor(check, timeoutMs = 1000) {
+  const deadline = Date.now() + timeoutMs;
+  while (Date.now() < deadline) {
+    const value = check();
+    if (value) return value;
+    await new Promise((resolve) => setTimeout(resolve, 10));
+  }
+  throw new Error("timed out waiting for condition");
+}
+
+test("injected runtime exposes native Host RPC", async () => {
+  const html = injectGappRuntime("<main></main>", { id: "demo", name: "Demo", scope: "project" }, {});
+  const script = html.match(/<script id="gapp-runtime">([\s\S]*?)<\/script>/)?.[1];
+  assert.ok(script);
+
+  const messages = [];
+  const window = { glimpse: { send: (message) => messages.push(message) } };
+  vm.runInContext(script, vm.createContext({ window, setTimeout, clearTimeout, Date, Math, Promise, Error, Object, Array, String }));
+
+  const resultPromise = window.GappHost.rpc("echo", { value: 7 }, { timeoutMs: 1000 });
+  const request = messages.at(-1);
+  assert.equal(request.type, "gapp_host_request");
+  assert.equal(request.method, "echo");
+  assert.deepEqual(request.arguments, { value: 7 });
+
+  window.GappHost.__dispatch({
+    type: "gapp_host_result",
+    requestId: request.requestId,
+    ok: true,
+    result: { value: 7 },
+  });
+  assert.deepEqual(await resultPromise, { value: 7 });
+});
+
+test("isolated runner forwards Host RPC through Node", async (t) => {
+  let received;
+  const server = createServer(async (request, response) => {
+    const chunks = [];
+    for await (const chunk of request) chunks.push(chunk);
+    received = {
+      url: request.url,
+      body: JSON.parse(Buffer.concat(chunks).toString("utf8")),
+    };
+    response.writeHead(200, { "Content-Type": "application/json" });
+    response.end(JSON.stringify({ ok: true, result: { frames: [] } }));
+  });
+  await new Promise((resolve) => server.listen(0, "127.0.0.1", resolve));
+  t.after(() => new Promise((resolve) => server.close(resolve)));
+  const port = server.address().port;
+
+  const handlers = {};
+  const scripts = [];
+  const win = {
+    on: (event, handler) => { handlers[event] = handler; },
+    send: (script) => scripts.push(script),
+  };
+  attachMessageRouter(
+    win,
+    { id: "ngrok-native-inspector", scope: "project" },
+    "/tmp/project",
+    `http://127.0.0.1:${port}`,
+  );
+
+  handlers.message({
+    type: "gapp_host_request",
+    id: "ngrok-native-inspector",
+    requestId: "rpc-test",
+    method: "ngrok.unary",
+    arguments: { method: "Preloaded" },
+  });
+
+  await waitFor(() => scripts[0]);
+  assert.equal(received.url, "/v1/gapp/apps/ngrok-native-inspector/rpc");
+  assert.equal(received.body.method, "ngrok.unary");
+  assert.equal(received.body.cwd, "/tmp/project");
+
+  const dispatched = JSON.parse(scripts[0].match(/__dispatch\((.*)\)$/s)[1]);
+  assert.equal(dispatched.requestId, "rpc-test");
+  assert.equal(dispatched.ok, true);
+  assert.deepEqual(dispatched.result, { frames: [] });
+});

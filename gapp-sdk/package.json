@@ -1,0 +1,41 @@
+{
+  "name": "@glimpse/gapp-sdk",
+  "version": "0.1.0",
+  "description": "Portable Glimpse-APP (GAPP) SDK — storage, version history, isolated runner",
+  "type": "module",
+  "main": "src/index.mjs",
+  "exports": {
+    ".": "./src/index.mjs",
+    "./storage": "./src/storage.mjs",
+    "./runner": "./src/runner.mjs",
+    "./registry": "./src/registry.mjs"
+  },
+  "bin": {
+    "gapp": "bin/gapp.mjs"
+  },
+  "scripts": {
+    "test": "node --test src/*.test.mjs"
+  },
+  "files": [
+    "src/",
+    "bin/"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "glimpse",
+    "gapp",
+    "sdk",
+    "webview"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "glimpseui": "*"
+  },
+  "peerDependenciesMeta": {
+    "glimpseui": {
+      "optional": true
+    }
+  }
+}

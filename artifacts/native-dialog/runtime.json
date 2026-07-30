@@ -1,0 +1,35 @@
+{
+  "result": "PASS",
+  "title": "OpenGlaze Native Dialog E2E 55795",
+  "nodePid": 55797,
+  "stages": [
+    {
+      "name": "messageBox",
+      "result": {
+        "checkboxChecked": true,
+        "response": 1
+      }
+    },
+    {
+      "name": "errorBox",
+      "result": null
+    },
+    {
+      "name": "openDialog",
+      "result": {
+        "filePaths": [],
+        "canceled": true
+      }
+    },
+    {
+      "name": "saveDialog",
+      "result": {
+        "canceled": true,
+        "filePath": ""
+      }
+    }
+  ],
+  "ready": true,
+  "awaiting": null,
+  "completedAt": "2026-07-27T10:13:46.474Z"
+}
