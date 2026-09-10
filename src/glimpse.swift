@@ -1781,16 +1781,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, WKNavigationDelegate, WKUIDe
         // races with Swift ARC and causes EXC_BAD_ACCESS on close.
         win.isReleasedWhenClosed = false
 
-        if windowConfig.transparent, let contentView = win.contentView {
-            let materialView = NSVisualEffectView(frame: contentView.bounds)
-            materialView.autoresizingMask = [.width, .height]
-            materialView.blendingMode = .behindWindow
-            materialView.material = .underWindowBackground
-            materialView.state = .active
-            materialView.isEmphasized = false
-            contentView.addSubview(materialView)
-        }
-
         let view = installWebView(frame: win.contentView!.bounds, windowConfig: windowConfig)
         view.autoresizingMask = [.width, .height]
         win.contentView?.addSubview(view)
