@@ -3,7 +3,7 @@
  * Works from Raycast, CLI, other tools.
  */
 import { pathToFileURL } from "node:url";
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { homedir } from "node:os";
 import { realpathSync } from "node:fs";
@@ -19,6 +19,84 @@ import { touchProject } from "./registry.mjs";
 
 const DEFAULT_GAPP_HOST_BASE = "http://127.0.0.1:54888";
 const HOST_RPC_TIMEOUT_MS = 130_000;
+const HOST_LEASE_TIMEOUT_MS = 5_000;
+const DEFAULT_HOST_TOKEN_PATH = join(homedir(), ".pi", "gapp", "host-token");
+
+/** Same bearer token the GAPP host daemon issues (see generative-ui/gapp/auth.ts). */
+export function readHostToken() {
+  const fromEnv = (process.env.GAPP_HOST_TOKEN || "").trim();
+  if (fromEnv) return fromEnv;
+  try {
+    const path = process.env.GAPP_HOST_TOKEN_PATH || DEFAULT_HOST_TOKEN_PATH;
+    return readFileSync(path, "utf8").trim() || null;
+  } catch {
+    return null;
+  }
+}
+
+function hostHeaders(extra = {}) {
+  const token = readHostToken();
+  return token ? { ...extra, Authorization: `Bearer ${token}` } : { ...extra };
+}
+
+export class GappLeaseError extends Error {
+  constructor(message, lease) {
+    super(message);
+    this.name = "GappLeaseError";
+    this.code = "already_connected";
+    this.lease = lease;
+  }
+}
+
+/**
+ * Take the host lease for this app so instances=single holds across processes.
+ * Returns a no-op release when no host is reachable: the isolated runner then
+ * degrades to a plain window opener instead of failing.
+ */
+export async function acquireRunnerLease(bundle, appCwd, hostBase, sessionId) {
+  const url = `${hostBase}/v1/gapp/leases/${encodeURIComponent(bundle.meta.id)}`;
+  const body = JSON.stringify({
+    sessionId,
+    instances: bundle.meta.instances === "multi" ? "multi" : "single",
+    host: hostBase,
+    cwd: appCwd,
+    scope: bundle.meta.scope,
+    pid: process.pid,
+    hasWindow: true,
+  });
+  let payload;
+  try {
+    const response = await fetch(url, {
+      method: "PUT",
+      headers: hostHeaders({ "Content-Type": "application/json" }),
+      body,
+      signal: AbortSignal.timeout(HOST_LEASE_TIMEOUT_MS),
+    });
+    payload = await response.json().catch(() => null);
+    if (response.ok && payload?.ok === true) {
+      return {
+        ok: true,
+        release: async () => {
+          await fetch(url, {
+            method: "DELETE",
+            headers: hostHeaders({ "Content-Type": "application/json" }),
+            body: JSON.stringify({ sessionId }),
+            signal: AbortSignal.timeout(HOST_LEASE_TIMEOUT_MS),
+          }).catch(() => {});
+        },
+      };
+    }
+  } catch {
+    return { ok: true, release: async () => {} };
+  }
+  if (payload?.code === "already_connected") {
+    throw new GappLeaseError(
+      payload.message || `GAPP "${bundle.meta.id}" is already live in another session`,
+      payload.lease,
+    );
+  }
+  return { ok: true, release: async () => {} };
+}
 
 function normalizeHostBase(value) {
   const url = new URL(String(value || DEFAULT_GAPP_HOST_BASE));
@@ -95,7 +173,7 @@ async function proxyHostRpc(win, data, meta, cwd, hostBase) {
   try {
     const response = await fetch(`${hostBase}/v1/gapp/apps/${encodeURIComponent(meta.id)}/rpc`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: hostHeaders({ "Content-Type": "application/json" }),
       body: JSON.stringify({
         method,
         arguments: args,
@@ -159,7 +237,7 @@ export function gappWindowOptions(meta, title) {
 /**
  * Open a GAPP in a Glimpse window (isolated from Pi).
  * @param {string} id
- * @param {{ cwd?: string, scope?: string, versionId?: string, source?: string, keepAlive?: boolean, hostBase?: string }} [options]
+ * @param {{ cwd?: string, scope?: string, versionId?: string, source?: string, keepAlive?: boolean, hostBase?: string, sessionId?: string, skipLease?: boolean }} [options]
  * @returns {Promise<{ win: any, meta: any, dir: string }>}
  */
 export async function runGapp(id, options = {}) {
@@ -184,6 +262,15 @@ export async function runGapp(id, options = {}) {
 
   if (!bundle) throw new GappValidationError(`GAPP not found: ${id}`);
 
+  const appCwd = bundle.meta.cwd || cwd;
+  const hostBase = normalizeHostBase(options.hostBase || process.env.GAPP_HOST_BASE);
+  // Lease before spawning the window: refuse instead of opening a second live
+  // connection to a strong-state app.
+  const sessionId = options.sessionId || `sdk-${process.pid}`;
+  const lease = options.skipLease
+    ? { release: async () => {} }
+    : await acquireRunnerLease(bundle, appCwd, hostBase, sessionId);
+
   const { open } = await resolveGlimpseui();
   const html = injectGappRuntime(bundle.html, bundle.meta, bundle.state);
 
@@ -200,9 +287,10 @@ export async function runGapp(id, options = {}) {
     else process.env.OS_ACTIVITY_MODE = prev;
   }
 
-  const appCwd = bundle.meta.cwd || cwd;
-  const hostBase = normalizeHostBase(options.hostBase || process.env.GAPP_HOST_BASE);
   attachMessageRouter(win, bundle.meta, appCwd, hostBase);
+  win.on("closed", () => {
+    void lease.release();
+  });
 
   if (bundle.meta.scope === "project" && appCwd) {
     await touchProject(appCwd, { name: appCwd.split("/").pop() });
