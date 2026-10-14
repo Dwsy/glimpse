@@ -11,54 +11,65 @@ import {
   popToRoot,
 } from "@raycast/api";
 import { usePromise } from "@raycast/utils";
-import { closeWindow, focusWindow, isHostRunning, listWindows, type GlimpseWindow } from "./lib/control";
+import { hostCatalog, hostWindow, type HostLiveApp } from "./lib/host";
+import { catalogGapps, projectLabel } from "./lib/gapp";
 
-function subtitleFor(win: GlimpseWindow): string {
-  const bits = [`${win.width}×${win.height}`];
-  if (win.floating) bits.push("floating");
-  if (win.miniaturized) bits.push("minimized");
-  if (!win.visible) bits.push("hidden");
+type LiveRow = HostLiveApp & { name: string; project: string };
+
+function subtitleFor(row: LiveRow): string {
+  const bits = [row.project];
+  bits.push(row.source === "pi-bridge" ? `held by ${row.sessionId}` : "host window");
   return bits.join(" · ");
 }
 
 export default function Command() {
   const [search, setSearch] = useState("");
-  const { data, isLoading, error, revalidate } = usePromise(async () => {
-    if (!isHostRunning()) {
-      return { windows: [] as GlimpseWindow[], offline: true as const };
-    }
-    const res = await listWindows();
-    return { windows: res.windows, offline: false as const };
+  const { data, isLoading, error, revalidate } = usePromise(async (): Promise<LiveRow[]> => {
+    const [catalog, host] = await Promise.all([
+      catalogGapps({ includeArchived: true, includeDisabled: true }).catch(() => []),
+      hostCatalog(),
+    ]);
+    const metaById = new Map(catalog.flatMap((section) => section.apps).map((app) => [app.id, app]));
+    return host.live.map((live) => {
+      const meta = metaById.get(live.appId);
+      return {
+        ...live,
+        name: meta?.name || live.appId,
+        project: projectLabel(live.cwd || meta?.cwd),
+      };
+    });
   });
 
-  const windows = (data?.windows ?? []).filter((w) => {
+  const rows = (data ?? []).filter((row) => {
     if (!search.trim()) return true;
     const q = search.toLowerCase();
-    return w.title.toLowerCase().includes(q) || w.id.toLowerCase().includes(q);
+    return (
+      row.name.toLowerCase().includes(q) ||
+      row.appId.toLowerCase().includes(q) ||
+      row.project.toLowerCase().includes(q) ||
+      row.sessionId.toLowerCase().includes(q)
+    );
   });
 
-  const onFocus = useCallback(
-    async (win: GlimpseWindow) => {
-      try {
-        await focusWindow(win.id);
-        await closeMainWindow({ clearRootSearch: true });
-        await popToRoot({ clearSearchBar: true });
-      } catch (e) {
-        await showToast({
-          style: Toast.Style.Failure,
-          title: "Failed to focus window",
-          message: e instanceof Error ? e.message : String(e),
-        });
-      }
-    },
-    [],
-  );
+  const onFocus = useCallback(async (row: LiveRow) => {
+    try {
+      await hostWindow(row.appId, "focus");
+      await closeMainWindow({ clearRootSearch: true });
+      await popToRoot({ clearSearchBar: true });
+    } catch (e) {
+      await showToast({
+        style: Toast.Style.Failure,
+        title: "Failed to focus window",
+        message: e instanceof Error ? e.message : String(e),
+      });
+    }
+  }, []);
 
   const onClose = useCallback(
-    async (win: GlimpseWindow) => {
+    async (row: LiveRow) => {
       try {
-        await closeWindow(win.id);
-        await showToast({ style: Toast.Style.Success, title: `Closed ${win.title}` });
+        await hostWindow(row.appId, "close");
+        await showToast({ style: Toast.Style.Success, title: `Closed ${row.name}` });
         revalidate();
       } catch (e) {
         await showToast({
@@ -76,20 +87,8 @@ export default function Command() {
       <List>
         <List.EmptyView
           icon={Icon.Warning}
-          title="Could not talk to Glimpse"
+          title="Could not talk to the GAPP host"
           description={error.message}
-        />
-      </List>
-    );
-  }
-
-  if (data?.offline) {
-    return (
-      <List>
-        <List.EmptyView
-          icon={Icon.Window}
-          title="No Glimpse host running"
-          description="Open a Glimpse window from your agent/script first, then re-run this command."
         />
       </List>
     );
@@ -98,42 +97,39 @@ export default function Command() {
   return (
     <List
       isLoading={isLoading}
-      searchBarPlaceholder="Filter Glimpse windows…"
+      searchBarPlaceholder="Filter live GAPP windows…"
       onSearchTextChange={setSearch}
       throttle
     >
-      {windows.length === 0 ? (
+      {rows.length === 0 ? (
         <List.EmptyView
           icon={Icon.Window}
-          title="No open Glimpse windows"
-          description="Host is up, but there are no windows right now."
+          title="No live GAPP windows"
+          description="Open one with “Browse GAPPs”, or from Pi / the gapp CLI."
         />
       ) : (
-        windows.map((win) => (
+        rows.map((row) => (
           <List.Item
-            key={win.id}
-            title={win.title}
-            subtitle={subtitleFor(win)}
-            icon={{
-              source: win.active ? Icon.CheckCircle : Icon.Window,
-              tintColor: win.active ? Color.Green : Color.SecondaryText,
-            }}
+            key={row.appId}
+            title={row.name}
+            subtitle={subtitleFor(row)}
+            icon={{ source: Icon.Window, tintColor: Color.Green }}
             accessories={[
-              ...(win.active ? [{ tag: { value: "active", color: Color.Green } }] : []),
-              { text: win.id.slice(0, 8) },
+              ...(row.instances === "single" ? [{ tag: { value: "single", color: Color.Orange } }] : []),
+              ...(row.source === "pi-bridge" ? [{ tag: { value: "pi", color: Color.Blue } }] : []),
             ]}
             actions={
               <ActionPanel>
-                <Action title="Focus Window" icon={Icon.ArrowRight} onAction={() => onFocus(win)} />
+                <Action title="Focus Window" icon={Icon.ArrowRight} onAction={() => onFocus(row)} />
                 <Action
                   title="Close Window"
                   icon={Icon.Trash}
                   style={Action.Style.Destructive}
-                  onAction={() => onClose(win)}
+                  onAction={() => onClose(row)}
                 />
                 <Action title="Refresh" icon={Icon.ArrowClockwise} onAction={() => revalidate()} />
-                <Action.CopyToClipboard title="Copy Window ID" content={win.id} />
-                <Action.CopyToClipboard title="Copy Title" content={win.title} />
+                <Action.CopyToClipboard title="Copy App ID" content={row.appId} />
+                <Action.CopyToClipboard title="Copy Session ID" content={row.sessionId} />
               </ActionPanel>
             }
           />

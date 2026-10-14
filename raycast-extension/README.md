@@ -1,6 +1,8 @@
 # Glimpse Windows — Raycast Extension
 
-List, focus, and close open Glimpse micro-UI windows from Raycast.
+Browse GAPPs and switch GAPP windows from Raycast. Window lifecycle goes
+through the **GAPP host daemon**, so windows outlive the Raycast command
+process and stay focusable/closeable from later invocations.
 
 ## Fix “Missing executable”
 
@@ -34,28 +36,33 @@ Leave this running; Raycast hot-reloads the extension.
 | Command | Mode | Description |
 |---------|------|-------------|
 | **Browse GAPPs** | view | By project · open · version history · enable/archive |
-| **Run Last GAPP** | no-view | Isolated open (no Pi) of most recent run |
-| **Switch Glimpse Window** | view | Live host windows; Enter focuses |
-| **Focus Active Glimpse Window** | no-view | Focus key/first live window |
-
-GAPP commands use `~/Dev/AI/glimpse/gapp-sdk` (portable, no agent).
+| **Run Last GAPP** | no-view | Open the most recent run through the GAPP host daemon |
+| **Switch GAPP Window** | view | Live GAPP windows; Enter focuses, ⌘K closes |
+| **Focus Active GAPP Window** | no-view | Focus the most recently opened GAPP window |
 
 ## Prerequisites
 
-1. Glimpse host running (open any window via `open()` / `glimpseui`).
-2. Control socket exists:
+The GAPP host daemon must be listening on `http://127.0.0.1:54888` (any running
+Pi session with the `generative-ui` extension hosts it; it is otherwise started
+on demand) with a bearer token at `~/.pi/gapp/host-token`.
 
 ```bash
-ls ~/Library/Application\ Support/dev.glimpse.ui/control.sock
-node /Users/dengwenyu/Dev/AI/glimpse/bin/glimpse-ctl.mjs list
+TOKEN=$(cat ~/.pi/gapp/host-token)
+curl -s -H "Authorization: Bearer $TOKEN" http://127.0.0.1:54888/v1/gapp
 ```
 
 ## Protocol
 
-Unix socket: `~/Library/Application Support/dev.glimpse.ui/control.sock`
+GAPP host daemon (HTTP + bearer token) — full contract in
+`~/.pi/agent/extensions/generative-ui/gapp/PROTOCOL.md`:
 
-```json
-{"type":"list"}
-{"type":"focus","id":"<window-id>"}
-{"type":"close","id":"<window-id>"}
 ```
+GET  /v1/gapp                    # live apps + leases + sessions
+POST /v1/gapp/apps/:appId/open   # {"cwd","scope","versionId","source"}
+POST /v1/gapp/apps/:appId/window # {"action":"focus"|"close"}
+```
+
+Disk stays SSOT for catalog, version history and run history — those reads keep
+going through `~/Dev/AI/glimpse/gapp-sdk` from the Raycast process. Opening,
+focusing and closing windows is daemon-owned (`instances: single` leases
+included), so a Raycast-opened window behaves exactly like one opened from Pi.

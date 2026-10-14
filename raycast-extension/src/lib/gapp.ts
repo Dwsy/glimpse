@@ -1,10 +1,15 @@
 /**
- * Thin client over @glimpse/gapp-sdk for Raycast (no Pi runtime).
+ * Raycast-side GAPP client (no Pi runtime).
+ *
+ * Split by ownership: disk stays SSOT for catalog/versions/runs (gapp-sdk),
+ * while window lifecycle goes through the GAPP host daemon so windows outlive
+ * the Raycast command process and honor `instances` leases.
  */
 import { pathToFileURL } from "node:url";
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { homedir } from "node:os";
+import { hostOpen } from "./host";
 
 export type GappMeta = {
   id: string;
@@ -81,16 +86,14 @@ export async function runGapp(
   id: string,
   opts?: { cwd?: string; scope?: string; versionId?: string },
 ): Promise<void> {
-  const sdk = await loadGappSdk();
-  // Fire-and-forget open; do not block Raycast on window close
-  const { win } = await sdk.runGapp(id, {
+  // Daemon-owned window: lease-checked, and still focusable after this command
+  // process exits.
+  await hostOpen(id, {
     cwd: opts?.cwd,
     scope: opts?.scope,
     versionId: opts?.versionId,
     source: "raycast",
   });
-  // Detach — Raycast command can exit while window stays open
-  win.on("closed", () => {});
 }
 
 export async function listVersions(id: string, cwd?: string): Promise<VersionEntry[]> {

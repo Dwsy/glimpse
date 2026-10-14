@@ -2,7 +2,7 @@
   "$schema": "https://www.raycast.com/schemas/extension.json",
   "name": "glimpse-windows",
   "title": "Glimpse",
-  "description": "Glimpse windows + portable GAPP browser (by project, history, isolated runner)",
+  "description": "Glimpse windows + portable GAPP browser (by project, history, host-daemon runner)",
   "icon": "icon.png",
   "author": "dwsy",
   "categories": ["Productivity", "Developer Tools"],
@@ -19,21 +19,21 @@
     {
       "name": "run-gapp",
       "title": "Run Last GAPP",
-      "description": "Open the most recently run GAPP with isolated SDK runner",
+      "description": "Open the most recently run GAPP through the GAPP host daemon",
       "mode": "no-view",
       "keywords": ["gapp", "run", "open"]
     },
     {
       "name": "list-windows",
-      "title": "Switch Glimpse Window",
-      "description": "Browse open Glimpse windows and activate one",
+      "title": "Switch GAPP Window",
+      "description": "Browse live GAPP windows and focus or close one",
       "mode": "view",
       "keywords": ["glimpse", "window", "switch", "focus", "webview"]
     },
     {
       "name": "focus-active",
-      "title": "Focus Active Glimpse Window",
-      "description": "Bring the key Glimpse window to the front",
+      "title": "Focus Active GAPP Window",
+      "description": "Bring the most recently opened GAPP window to the front",
       "mode": "no-view",
       "keywords": ["glimpse", "focus"]
     }
