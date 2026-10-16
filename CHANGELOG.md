@@ -11,6 +11,7 @@
 
 - Added a Glaze-compatible macOS native dialog bridge for `showOpenDialog`, `showSaveDialog`, `showMessageBox`, and `showErrorBox`. Dialogs are AppKit sheets attached to the invoking window, with per-window concurrency guards, file filters, default paths, optional security-scoped bookmarks, button indices, and checkbox results.
 - Added static bridge coverage plus a real AppKit/Accessibility E2E that presses alert buttons and cancels open/save panels without writing user files.
+- The Raycast extension now starts the GAPP host daemon on demand instead of requiring a Pi session to host the control plane. A `connection refused` spawns the detached supervisor and polls `/health` for 10s; an HTTP error from a live daemon is never treated as a dead control plane. See `raycast-extension/README.md` for the `GAPP_*` env vars and the daemon log path.
 
 ## 0.6.1
 
