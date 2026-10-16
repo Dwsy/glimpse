@@ -42,9 +42,21 @@ Leave this running; Raycast hot-reloads the extension.
 
 ## Prerequisites
 
-The GAPP host daemon must be listening on `http://127.0.0.1:54888` (any running
-Pi session with the `generative-ui` extension hosts it; it is otherwise started
-on demand) with a bearer token at `~/.pi/gapp/host-token`.
+The GAPP host daemon listens on `http://127.0.0.1:54888` with a bearer token at
+`~/.pi/gapp/host-token`. Any running Pi session with the `generative-ui`
+extension hosts it — and when nothing is listening, Raycast starts a detached
+daemon itself, so GAPPs open without a Pi session. Only a "connection refused"
+triggers that spawn; an HTTP error from a live daemon never does.
+
+| Env var | Default | Purpose |
+|---------|---------|---------|
+| `GAPP_HOST_BASE` | `http://127.0.0.1:54888` | Daemon base URL |
+| `GAPP_HOST_TOKEN` | — | Bearer token (else read from the token file) |
+| `GAPP_HOST_TOKEN_PATH` | `~/.pi/gapp/host-token` | Token file location |
+| `GAPP_DAEMON_DIR` | `~/.pi/agent/extensions/generative-ui/gapp` | Where `daemon-supervisor.ts` lives |
+| `GAPP_BUN_BIN` | `bun` on `PATH`, else `~/.bun/bin/bun` | Bun used to launch the supervisor |
+
+The daemon logs to `~/.pi/gapp/_host/gapp-host.log`; check it when startup fails.
 
 ```bash
 TOKEN=$(cat ~/.pi/gapp/host-token)

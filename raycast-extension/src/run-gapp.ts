@@ -1,5 +1,5 @@
 /**
- * Quick no-view launcher: open the most recently run GAPP (isolated, no Pi).
+ * Quick no-view launcher: open the most recently run GAPP through the GAPP host daemon (no Pi).
  */
 import { closeMainWindow, launchCommand, LaunchType, showHUD, showToast, Toast } from "@raycast/api";
 import { catalogGapps, listGlobalRuns, runGapp } from "./lib/gapp";

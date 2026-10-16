@@ -100,7 +100,7 @@ function AppActions({
 
   return (
     <ActionPanel>
-      <Action title="Open (Isolated Runner)" icon={Icon.Play} onAction={openApp} />
+      <Action title="Open" icon={Icon.Play} onAction={openApp} />
       <Action.Push
         title="Version History"
         icon={Icon.Clock}
