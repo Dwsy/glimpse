@@ -182,6 +182,9 @@ struct Config {
     var width: Int = 800
     var height: Int = 600
     var title: String = "Glimpse"
+    /// True when the host asked for this title explicitly (`--title` / `open.title`).
+    /// Explicit titles win over the page's `<title>`; see `WindowRecord.applyPageTitle`.
+    var titleExplicit: Bool = false
     var frameless: Bool = false
     var floating: Bool = false
     var transparent: Bool = false
@@ -210,7 +213,10 @@ func configFromOpenCommand(_ json: [String: Any], defaults: Config) -> Config {
     var c = defaults
     if let v = json["width"] as? Int { c.width = v }
     if let v = json["height"] as? Int { c.height = v }
-    if let v = json["title"] as? String { c.title = v }
+    if let v = json["title"] as? String {
+        c.title = v
+        c.titleExplicit = true
+    }
     if let v = json["frameless"] as? Bool { c.frameless = v }
     if let v = json["floating"] as? Bool { c.floating = v }
     if let v = json["transparent"] as? Bool { c.transparent = v }
@@ -249,7 +255,10 @@ func parseArgs() -> Config {
             if i < args.count, let v = Int(args[i]) { config.height = v }
         case "--title":
             i += 1
-            if i < args.count { config.title = args[i] }
+            if i < args.count {
+                config.title = args[i]
+                config.titleExplicit = true
+            }
         case "--frameless":
             config.frameless = true
         case "--floating":
@@ -1166,6 +1175,10 @@ final class WindowRecord {
     var followMode: String
     var nativeThemeSource: String = "system"
     var closed: Bool = false
+    /// Set once the host pins a title (`--title`, `open.title`, `title` / `show`).
+    var titlePinned: Bool
+    /// KVO on `WKWebView.title` — keeps the window title in sync with the page.
+    var titleObservation: NSKeyValueObservation?
 
     init(id: String, config: Config, window: NSWindow, webView: WKWebView) {
         self.id = id
@@ -1175,6 +1188,19 @@ final class WindowRecord {
         self.hidden = config.hidden
         self.cursorAnchor = config.cursorAnchor
         self.followMode = config.followMode
+        self.titlePinned = config.titleExplicit
+    }
+
+    /// Browser-tab titles: mirror the page's `<title>` onto the window so Mission
+    /// Control, the Dock window list and the control socket report the page, not
+    /// "Glimpse". WebKit reports an empty title both for documents without a
+    /// `<title>` and transiently while navigating, so an empty value keeps the
+    /// previous title instead of flickering to a placeholder.
+    func applyPageTitle(_ raw: String?) {
+        guard !closed, !titlePinned else { return }
+        let title = (raw ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !title.isEmpty, window.title != title else { return }
+        window.title = title
     }
 
     /// Break WebKit / AppKit retain cycles before the window finishes closing.
@@ -1191,6 +1217,9 @@ final class WindowRecord {
         webView.configuration.userContentController.removeScriptMessageHandler(forName: "glimpse")
         nativeFindController?.invalidate()
         nativeFindController = nil
+        // Stop mirroring page titles into a window that is going away.
+        titleObservation?.invalidate()
+        titleObservation = nil
         for view in nativeGlassViews.values { view.removeFromSuperview() }
         nativeGlassViews.removeAll()
         for session in nativeDatePickerSessions.values { session.invalidate() }
@@ -1699,6 +1728,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, WKNavigationDelegate, WKUIDe
         // Associate webview → host for context-menu inspector
         if let gv = built.webView as? GlimpseWebView {
             gv.host = self
+        }
+
+        // Mirror the page's <title> into the window title. WebKit mutates `title`
+        // on the main thread and re-fires for later `document.title` writes.
+        rec.titleObservation = built.webView.observe(\.title, options: [.new]) { [weak rec] _, change in
+            MainActor.assumeIsolated {
+                rec?.applyPageTitle(change.newValue ?? nil)
+            }
         }
 
         if windowConfig.followCursor {
@@ -2374,6 +2411,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, WKNavigationDelegate, WKUIDe
                 }
                 if let title = json["title"] as? String {
                     rec.window.title = title
+                    rec.titlePinned = true
                 }
                 activateRecord(rec)
             }
@@ -2387,6 +2425,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, WKNavigationDelegate, WKUIDe
                 nsStatusItem?.button?.title = title
             } else if let rec = resolveRecord(from: json) {
                 rec.window.title = title
+                rec.titlePinned = true
             }
 
         case "resize":

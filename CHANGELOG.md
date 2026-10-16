@@ -3,6 +3,10 @@
 
 ## Unreleased
 
+### Changed
+
+- **Window titles now follow the page.** Omit `title` and the window mirrors the document's `<title>` — including later `document.title` writes — like a browser tab, so Mission Control, the Dock window list and `glimpse-ctl list` report the page instead of `"Glimpse"`. A title passed to `open()`, `--title`, or the `title` / `show` protocol commands is pinned and cannot be overwritten by the page. Documents without a `<title>` keep the `"Glimpse"` placeholder instead of blanking.
+
 ### Added
 
 - Added a Glaze-compatible macOS native dialog bridge for `showOpenDialog`, `showSaveDialog`, `showMessageBox`, and `showErrorBox`. Dialogs are AppKit sheets attached to the invoking window, with per-window concurrency guards, file filters, default paths, optional security-scoped bookmarks, button indices, and checkbox results.

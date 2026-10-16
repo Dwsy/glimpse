@@ -212,9 +212,11 @@ import { open } from 'glimpseui';
 const win = open('<html>...</html>', {
   width:  800,    // default: 800
   height: 600,    // default: 600
-  title:  'App',  // default: "Glimpse"
+  title:  'App',  // default: follow the page's <title>, like a browser tab
 });
 ```
+
+**Window titles** work like browser tabs. Omit `title` and the window mirrors the page's `<title>`, including later `document.title` writes — Mission Control, the Dock window list and `glimpse-ctl list` all report the page. A title passed to `open()`, `--title`, or the `title` / `show` protocol commands is *pinned*: it stays put and the page cannot overwrite it. Documents without a `<title>` keep the `"Glimpse"` placeholder rather than blanking.
 
 **All options:**
 
@@ -222,7 +224,7 @@ const win = open('<html>...</html>', {
 |--------|------|---------|-------------|
 | `width` | number | `800` | Window width in pixels |
 | `height` | number | `600` | Window height in pixels |
-| `title` | string | `"Glimpse"` | Title bar text (ignored when frameless) |
+| `title` | string | page `<title>` | Title bar text. When omitted, the window follows the page's `<title>` like a browser tab (ignored when frameless) |
 | `x` | number | — | Horizontal screen position (omit to center) |
 | `y` | number | — | Vertical screen position (omit to center) |
 | `frameless` | boolean | `false` | Remove the title bar |
@@ -364,7 +366,7 @@ const isDark = win.info.appearance.darkMode;
 
 **`win.loadFile(path)`** — Load a local HTML file by absolute path.
 
-**`win.show(options?)`** — Reveal a hidden window. Optional `options.title` sets the window title.
+**`win.show(options?)`** — Reveal a hidden window. Optional `options.title` sets and pins the window title.
 ```js
 win.show();
 win.show({ title: 'Results' });
@@ -421,13 +423,13 @@ Glimpse uses a newline-delimited JSON (JSON Lines) protocol over stdin/stdout. E
 {"type":"get-info"}
 ```
 
-**Show** — Reveal a hidden window. Optional `title`.
+**Show** — Reveal a hidden window. Optional `title` pins the window title.
 ```json
 {"type":"show"}
 {"type":"show","title":"Results"}
 ```
 
-**Title** — Update menu bar text (status item mode only).
+**Title** — Pin the window title (or update menu bar text in status item mode). A pinned title stops following the page's `<title>`.
 ```json
 {"type":"title","title":"🔴"}
 ```
@@ -494,7 +496,7 @@ npx glimpseui page.html --frameless --transparent
 |------|---------|-------------|
 | `--width N` | `800` | Window width in pixels |
 | `--height N` | `600` | Window height in pixels |
-| `--title STR` | `"Glimpse"` | Window title bar text |
+| `--title STR` | page `<title>` | Window title bar text. Pins the title; when omitted the window follows the page's `<title>` |
 | `--x N` | — | Horizontal screen position |
 | `--y N` | — | Vertical screen position |
 | `--frameless` | off | Remove the title bar |

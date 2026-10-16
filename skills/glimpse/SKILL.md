@@ -37,7 +37,7 @@ import { prompt } from '<RESOLVED_PATH>/src/glimpse.mjs';
 
 const answer = await prompt(html, {
   width: 400, height: 300,    // window size
-  title: 'My Dialog',         // title bar text
+  title: 'My Dialog',         // pins the title bar; omit to follow the page's <title>
   frameless: true,             // no title bar
   transparent: true,           // see-through background
 });
@@ -64,7 +64,7 @@ win.close();                         // close window
 ```js
 {
   width, height,          // pixels (default: 800×600)
-  title,                  // window title (default: "Glimpse")
+  title,                  // pins the window title; omit to follow the page's <title> (browser-tab style)
   frameless: true,        // no title bar, draggable by background
   floating: true,         // always on top
   transparent: true,      // transparent window background
