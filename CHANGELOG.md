@@ -3,6 +3,10 @@
 
 ## Unreleased
 
+### Fixed
+
+- **Reload no longer blanks the window.** `WKWebView.reload()` re-navigates to the document URL, and documents created by `loadHTMLString(_:baseURL:)` have none — so Cmd-R, View > Reload Page, the context menu, or `location.reload()` landed on `about:blank` and the page was gone for good. This erased every Glimpse-APP, whose host inlines state and runtime into an HTML string. Each window now records its content source (inline HTML, local file, or remote URL) and reload replays it: inline documents are re-loaded from the remembered string, files are re-read from disk, and remote URLs re-navigate. A reload that cannot be replayed keeps the current page instead of blanking it.
+
 ### Changed
 
 - **Window titles now follow the page.** Omit `title` and the window mirrors the document's `<title>` — including later `document.title` writes — like a browser tab, so Mission Control, the Dock window list and `glimpse-ctl list` report the page instead of `"Glimpse"`. A title passed to `open()`, `--title`, or the `title` / `show` protocol commands is pinned and cannot be overwritten by the page. Documents without a `<title>` keep the `"Glimpse"` placeholder instead of blanking.

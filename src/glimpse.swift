@@ -1113,7 +1113,15 @@ class GlimpseWebView: WKWebView {
             if !menu.items.isEmpty {
                 menu.addItem(NSMenuItem.separator())
             }
-            menu.addItem(NSMenuItem(title: "Reload Page", action: #selector(WKWebView.reload(_:)), keyEquivalent: ""))
+            // Route through the host, not WKWebView.reload(): an inline-HTML
+            // document has no URL and would reload to a blank page.
+            let reload = NSMenuItem(
+                title: "Reload Page",
+                action: #selector(AppDelegate.reloadPage(_:)),
+                keyEquivalent: ""
+            )
+            reload.target = host
+            menu.addItem(reload)
         }
 
         // Developer tools — WebKit adds this when developerExtrasEnabled / isInspectable,
@@ -1156,6 +1164,15 @@ class StatusItemViewController: NSViewController {
 
 // MARK: - Per-window record (multi-window host / dock list)
 
+/// The last document loaded into a window, in the form needed to load it again.
+/// Reload is a navigation, so a window whose content only exists in memory (an
+/// inline HTML string) cannot use `WKWebView.reload()` without erasing itself.
+enum ContentSource {
+    case none
+    case html(String)
+    case file(URL)
+}
+
 @MainActor
 final class WindowRecord {
     let id: String
@@ -1179,6 +1196,11 @@ final class WindowRecord {
     var titlePinned: Bool
     /// KVO on `WKWebView.title` — keeps the window title in sync with the page.
     var titleObservation: NSKeyValueObservation?
+
+    /// Where the current document came from. `loadHTMLString` has no URL, so
+    /// WebKit's own reload would navigate to `about:blank` and drop the page.
+    /// Remembering the source lets a reload replay it instead of blanking.
+    var contentSource: ContentSource = .none
 
     init(id: String, config: Config, window: NSWindow, webView: WKWebView) {
         self.id = id
@@ -1914,7 +1936,51 @@ class AppDelegate: NSObject, NSApplicationDelegate, WKNavigationDelegate, WKUIDe
     }
 
     @objc func reloadPage(_ sender: Any?) {
-        webView?.reload()
+        guard let rec = resolveRecord(from: [:]) else {
+            // Status-item mode keeps a single webview with no window record.
+            webView?.reload()
+            return
+        }
+        reloadContent(rec)
+    }
+
+    // MARK: - Content Loading & Reload
+
+    /// Load inline HTML and remember it, so Reload can replay it.
+    private func loadContent(html: String, into rec: WindowRecord) {
+        rec.contentSource = .html(html)
+        rec.webView.loadHTMLString(html, baseURL: nil)
+    }
+
+    /// Load a local file and remember it, so Reload re-reads it from disk.
+    private func loadContent(fileURL: URL, into rec: WindowRecord) {
+        rec.contentSource = .file(fileURL)
+        rec.webView.loadFileURL(
+            fileURL,
+            allowingReadAccessTo: fileURL.deletingLastPathComponent()
+        )
+    }
+
+    /// Reload without destroying content that only exists in memory.
+    ///
+    /// `WKWebView.reload()` re-navigates to the document's URL. Documents created
+    /// by `loadHTMLString(_:baseURL:)` have no URL, so a plain reload lands on
+    /// `about:blank` and the window goes blank for good. Replaying the remembered
+    /// source keeps the page — and any injected runtime — intact.
+    private func reloadContent(_ rec: WindowRecord) {
+        switch rec.contentSource {
+        case .none:
+            rec.webView.reload()
+        case .html(let html):
+            rec.webView.loadHTMLString(html, baseURL: nil)
+        case .file(let url):
+            // A missing file keeps the current page instead of blanking it.
+            guard FileManager.default.fileExists(atPath: url.path) else {
+                log("reload: file no longer exists: \(url.path)")
+                return
+            }
+            rec.webView.loadFileURL(url, allowingReadAccessTo: url.deletingLastPathComponent())
+        }
     }
 
     private func activeFindRecord() -> WindowRecord? {
@@ -2284,7 +2350,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, WKNavigationDelegate, WKUIDe
                let htmlData = Data(base64Encoded: base64),
                let html = String(data: htmlData, encoding: .utf8),
                let rec = records[id] {
-                rec.webView.loadHTMLString(html, baseURL: nil)
+                loadContent(html: html, into: rec)
             }
             return
 
@@ -2301,7 +2367,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, WKNavigationDelegate, WKUIDe
                 return
             }
             if let record = target.record { bindActive(from: record) }
-            target.webView.loadHTMLString(html, baseURL: nil)
+            if let record = target.record {
+                loadContent(html: html, into: record)
+            } else {
+                target.webView.loadHTMLString(html, baseURL: nil)
+            }
 
         case "eval":
             guard let js = json["js"] as? String else {
@@ -2384,7 +2454,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, WKNavigationDelegate, WKUIDe
                 return
             }
             if let record = target.record { bindActive(from: record) }
-            target.webView.loadFileURL(fileURL, allowingReadAccessTo: fileURL.deletingLastPathComponent())
+            if let record = target.record {
+                loadContent(fileURL: fileURL, into: record)
+            } else {
+                target.webView.loadFileURL(fileURL, allowingReadAccessTo: fileURL.deletingLastPathComponent())
+            }
 
         case "get-info":
             let rec = resolveRecord(from: json)
@@ -2580,6 +2654,20 @@ class AppDelegate: NSObject, NSApplicationDelegate, WKNavigationDelegate, WKUIDe
     nonisolated func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         MainActor.assumeIsolated {
             let rec = self.record(forWebView: webView)
+
+            // Reload is a navigation. For an inline-HTML document WebKit resolves
+            // it against a nil base URL and would land on `about:blank`, erasing
+            // the page. Replay the remembered source instead. This covers every
+            // reload trigger: Cmd-R, the View menu, the context menu, and
+            // `location.reload()` from page script.
+            if navigationAction.navigationType == .reload,
+               let rec,
+               case .html = rec.contentSource {
+                decisionHandler(.cancel)
+                self.reloadContent(rec)
+                return
+            }
+
             let openLinks = rec?.config.openLinks ?? self.config.openLinks
             guard openLinks else {
                 decisionHandler(.allow)

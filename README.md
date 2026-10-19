@@ -401,6 +401,8 @@ Glimpse uses a newline-delimited JSON (JSON Lines) protocol over stdin/stdout. E
 {"type":"html","html":"<base64-encoded HTML>"}
 ```
 
+Inline HTML has no document URL, so the host remembers the string and replays it on reload (Cmd-R, View > Reload Page, context menu, or `location.reload()`). A reload never navigates to `about:blank`.
+
 **Eval JavaScript** — Run JS in the WebView.
 ```json
 {"type":"eval","js":"document.title = 'Updated'"}
@@ -413,7 +415,7 @@ Glimpse uses a newline-delimited JSON (JSON Lines) protocol over stdin/stdout. E
 {"type":"follow-cursor","enabled":false}
 ```
 
-**Load File** — Load a local HTML file by absolute path.
+**Load File** — Load a local HTML file by absolute path. Reload re-reads the file from disk, so edits on disk are picked up.
 ```json
 {"type":"file","path":"/path/to/page.html"}
 ```
