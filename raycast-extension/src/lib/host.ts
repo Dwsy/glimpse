@@ -71,7 +71,10 @@ async function requestOnce<T>(path: string, init?: { method?: string; body?: unk
   } catch (error) {
     throw new DaemonUnreachable(error instanceof Error ? error.message : String(error));
   }
-  const payload = await response.json().catch(() => null);
+  const payload = (await response.json().catch(() => null)) as {
+    ok?: boolean;
+    error?: { message?: string };
+  } | null;
   if (!response.ok || payload?.ok !== true) {
     throw new Error(payload?.error?.message || `GAPP host HTTP ${response.status}`);
   }
@@ -111,9 +114,11 @@ async function probeHealth(): Promise<boolean> {
   try {
     const response = await fetch(`${hostBaseUrl()}/health`, {
       signal: AbortSignal.timeout(500),
+      // @types/node 20.8 omits undici's `cache` option; the runtime honours it.
       cache: "no-store",
-    });
-    return response.ok && (await response.json())?.service === "gapp-host";
+    } as RequestInit);
+    const body = (await response.json()) as { service?: string };
+    return response.ok && body.service === "gapp-host";
   } catch {
     return false;
   }

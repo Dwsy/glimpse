@@ -31,6 +31,20 @@ npm run dev
 
 Leave this running; Raycast hot-reloads the extension.
 
+## Raycast-compatible launchers (Tinycast)
+
+The extension depends on `@raycast/api` only. It deliberately avoids
+`@raycast/utils`, which bundles Raycast AI (`AI.ask`) into every command and
+bloats each view to ~2 MB; launchers without Raycast AI cannot rely on it.
+
+`gapp-sdk` is compiled into each command at build time from `../../gapp-sdk`.
+Nothing is loaded from disk at runtime: Tinycast runs bundles on
+JavaScriptCore, whose ESM loader is absent, so a runtime `import()` of the SDK
+fails with `No module loader provided`.
+
+Import this folder the same way — the compiled `.js` files at the package root
+are what get executed.
+
 ## Commands
 
 | Command | Mode | Description |
@@ -74,7 +88,8 @@ POST /v1/gapp/apps/:appId/open   # {"cwd","scope","versionId","source"}
 POST /v1/gapp/apps/:appId/window # {"action":"focus"|"close"}
 ```
 
-Disk stays SSOT for catalog, version history and run history — those reads keep
-going through `~/Dev/AI/glimpse/gapp-sdk` from the Raycast process. Opening,
-focusing and closing windows is daemon-owned (`instances: single` leases
-included), so a Raycast-opened window behaves exactly like one opened from Pi.
+Disk stays SSOT for catalog, version history and run history, but `gapp-sdk` is
+compiled into the command bundles at build time — rebuilding after an SDK change
+is `npm run prepare-import`. Opening, focusing and closing windows is
+daemon-owned (`instances: single` leases included), so a Raycast-opened window
+behaves exactly like one opened from Pi.

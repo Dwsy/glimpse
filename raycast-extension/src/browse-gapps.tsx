@@ -12,7 +12,7 @@ import {
   confirmAlert,
   Alert,
 } from "@raycast/api";
-import { usePromise } from "@raycast/utils";
+import { useAsync } from "./lib/use-async";
 import {
   catalogGapps,
   runGapp,
@@ -136,7 +136,7 @@ function VersionHistoryView({
   cwd?: string;
   onRefresh: () => void;
 }) {
-  const { data, isLoading, error, revalidate } = usePromise(() => listVersions(app.id, cwd));
+  const { data, isLoading, error, revalidate } = useAsync(() => listVersions(app.id, cwd));
 
   const restore = async (v: VersionEntry) => {
     const ok = await confirmAlert({
@@ -203,7 +203,7 @@ function VersionHistoryView({
 }
 
 function RunHistoryView({ app, cwd }: { app: GappMeta; cwd?: string }) {
-  const { data, isLoading, error } = usePromise(() => listRuns(app.id, cwd));
+  const { data, isLoading, error } = useAsync(() => listRuns(app.id, cwd));
   return (
     <List isLoading={isLoading} navigationTitle={`Runs · ${app.name}`}>
       {error ? (
@@ -211,7 +211,7 @@ function RunHistoryView({ app, cwd }: { app: GappMeta; cwd?: string }) {
       ) : !data?.length ? (
         <List.EmptyView title="No runs recorded" description="Open the app once to record a run." />
       ) : (
-        data.map((r: any, i: number) => (
+        data.map((r, i) => (
           <List.Item
             key={`${r.at}-${i}`}
             title={r.at}
@@ -225,7 +225,7 @@ function RunHistoryView({ app, cwd }: { app: GappMeta; cwd?: string }) {
 
 export default function Command() {
   const [showAll, setShowAll] = useState(false);
-  const { data, isLoading, error, revalidate } = usePromise(
+  const { data, isLoading, error, revalidate } = useAsync(
     async (includeAll: boolean) =>
       catalogGapps({
         includeArchived: includeAll,
@@ -300,7 +300,7 @@ export default function Command() {
 }
 
 function RecentRunsItem() {
-  const { data, isLoading } = usePromise(() => listGlobalRuns(15));
+  const { data, isLoading } = useAsync(() => listGlobalRuns(15));
   if (isLoading) {
     return <List.Item title="Loading recent runs…" icon={Icon.Clock} />;
   }
@@ -310,7 +310,7 @@ function RecentRunsItem() {
   // Show as one expandable summary + push for detail would be heavy; list top runs inline
   return (
     <>
-      {data.slice(0, 8).map((r: any, i: number) => (
+      {data.slice(0, 8).map((r, i) => (
         <List.Item
           key={`run-${i}-${r.at}`}
           title={r.name || r.id}

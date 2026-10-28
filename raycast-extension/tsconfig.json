@@ -6,6 +6,8 @@
     "moduleResolution": "node",
     "jsx": "react-jsx",
     "strict": true,
+    "allowJs": true,
+    "checkJs": false,
     "isolatedModules": true,
     "esModuleInterop": true,
     "skipLibCheck": true,

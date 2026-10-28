@@ -1,14 +1,22 @@
 /**
  * Raycast-side GAPP client (no Pi runtime).
  *
- * Split by ownership: disk stays SSOT for catalog/versions/runs (gapp-sdk),
- * while window lifecycle goes through the GAPP host daemon so windows outlive
- * the Raycast command process and honor `instances` leases.
+ * Disk stays SSOT for catalog, version history and run history, but `gapp-sdk`
+ * is bundled into every command at build time: Tinycast runs bundles on
+ * JavaScriptCore, which has no ESM loader, so a runtime `import()` of
+ * `gapp-sdk/src/index.mjs` fails with "No module loader provided".
+ *
+ * Window lifecycle goes through the GAPP host daemon so windows outlive the
+ * Raycast command process and honor `instances` leases.
  */
-import { pathToFileURL } from "node:url";
-import { existsSync } from "node:fs";
-import { join } from "node:path";
-import { homedir } from "node:os";
+import {
+  listGlobalRuns as sdkListGlobalRuns,
+  listRuns as sdkListRuns,
+  listVersions as sdkListVersions,
+  restoreVersion as sdkRestoreVersion,
+  setGappStatus as sdkSetGappStatus,
+} from "../../../gapp-sdk/src/storage.mjs";
+import { catalogGapps as sdkCatalogGapps } from "../../../gapp-sdk/src/registry.mjs";
 import { hostOpen } from "./host";
 
 export type GappMeta = {
@@ -45,38 +53,22 @@ export type VersionEntry = {
   version?: number | null;
 };
 
-let sdkPromise: Promise<any> | null = null;
-
-function sdkEntryCandidates(): string[] {
-  const list = [
-    process.env.GAPP_SDK_PATH,
-    join(homedir(), "Dev/AI/glimpse/gapp-sdk/src/index.mjs"),
-    join(homedir(), "Dev/glimpse/gapp-sdk/src/index.mjs"),
-  ].filter(Boolean) as string[];
-  return list;
-}
-
-export async function loadGappSdk(): Promise<any> {
-  if (sdkPromise) return sdkPromise;
-  sdkPromise = (async () => {
-    for (const c of sdkEntryCandidates()) {
-      if (existsSync(c)) {
-        return import(pathToFileURL(c).href);
-      }
-    }
-    throw new Error(
-      "gapp-sdk not found. Expected ~/Dev/AI/glimpse/gapp-sdk (set GAPP_SDK_PATH to override).",
-    );
-  })();
-  return sdkPromise;
-}
+export type GappRun = {
+  at: string;
+  id: string;
+  name?: string;
+  scope?: string;
+  cwd?: string;
+  version?: number | null;
+  contentHash?: string;
+  source?: string;
+};
 
 export async function catalogGapps(opts?: {
   includeArchived?: boolean;
   includeDisabled?: boolean;
 }): Promise<CatalogSection[]> {
-  const sdk = await loadGappSdk();
-  return sdk.catalogGapps({
+  return sdkCatalogGapps({
     includeArchived: opts?.includeArchived === true,
     includeDisabled: opts?.includeDisabled === true,
   });
@@ -97,13 +89,11 @@ export async function runGapp(
 }
 
 export async function listVersions(id: string, cwd?: string): Promise<VersionEntry[]> {
-  const sdk = await loadGappSdk();
-  return sdk.listVersions(id, { cwd });
+  return sdkListVersions(id, { cwd });
 }
 
 export async function restoreVersion(id: string, versionId: string, cwd?: string) {
-  const sdk = await loadGappSdk();
-  return sdk.restoreVersion(id, versionId, { cwd });
+  return sdkRestoreVersion(id, versionId, { cwd });
 }
 
 export async function setGappStatus(
@@ -111,18 +101,15 @@ export async function setGappStatus(
   status: { enabled?: boolean; archived?: boolean },
   cwd?: string,
 ) {
-  const sdk = await loadGappSdk();
-  return sdk.setGappStatus(id, status, { cwd });
+  return sdkSetGappStatus(id, status, { cwd });
 }
 
-export async function listGlobalRuns(limit = 50) {
-  const sdk = await loadGappSdk();
-  return sdk.listGlobalRuns(limit);
+export async function listGlobalRuns(limit = 50): Promise<GappRun[]> {
+  return sdkListGlobalRuns(limit);
 }
 
-export async function listRuns(id: string, cwd?: string) {
-  const sdk = await loadGappSdk();
-  return sdk.listRuns(id, { cwd });
+export async function listRuns(id: string, cwd?: string): Promise<GappRun[]> {
+  return sdkListRuns(id, { cwd });
 }
 
 export function projectLabel(cwd: string | null | undefined): string {

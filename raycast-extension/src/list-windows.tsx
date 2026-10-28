@@ -10,7 +10,7 @@ import {
   closeMainWindow,
   popToRoot,
 } from "@raycast/api";
-import { usePromise } from "@raycast/utils";
+import { useAsync } from "./lib/use-async";
 import { hostCatalog, hostWindow, type HostLiveApp } from "./lib/host";
 import { catalogGapps, projectLabel } from "./lib/gapp";
 
@@ -24,7 +24,7 @@ function subtitleFor(row: LiveRow): string {
 
 export default function Command() {
   const [search, setSearch] = useState("");
-  const { data, isLoading, error, revalidate } = usePromise(async (): Promise<LiveRow[]> => {
+  const { data, isLoading, error, revalidate } = useAsync(async (): Promise<LiveRow[]> => {
     const [catalog, host] = await Promise.all([
       catalogGapps({ includeArchived: true, includeDisabled: true }).catch(() => []),
       hostCatalog(),
