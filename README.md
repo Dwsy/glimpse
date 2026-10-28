@@ -348,6 +348,8 @@ win.send(`document.body.style.background = 'coral'`);
 win.setHTML('<html><body><h1>Step 2</h1></body></html>');
 ```
 
+Inline HTML has no document URL. On macOS the window remembers the string and replays it on reload, so Cmd-R keeps the page instead of blanking it. See [Reload](#reload).
+
 **`win.followCursor(enabled, anchor?, mode?)`** — Start or stop cursor tracking at runtime. Optional `anchor` sets the snap point. Optional `mode` sets the animation: `snap` or `spring`.
 ```js
 win.followCursor(true);                        // attach to cursor
@@ -364,7 +366,7 @@ const isDark = win.info.appearance.darkMode;
 
 **`win.getInfo()`** — Request fresh system info. Emits an `info` event.
 
-**`win.loadFile(path)`** — Load a local HTML file by absolute path.
+**`win.loadFile(path)`** — Load a local HTML file by absolute path. On macOS, reload re-reads the file from disk.
 
 **`win.show(options?)`** — Reveal a hidden window. Optional `options.title` sets and pins the window title.
 ```js
@@ -373,6 +375,27 @@ win.show({ title: 'Results' });
 ```
 
 **`win.close()`** — Close the window.
+
+### Reload
+
+Reload is a navigation, and `WKWebView.reload()` (macOS) / `NavigateToString` (Windows) / `load_html` (Linux) re-resolve against the document URL. Content loaded from an HTML *string* has no URL, so a naive reload lands on `about:blank` and the page is gone for good.
+
+On macOS, Glimpse records where each window's document came from and replays it instead:
+
+| Content source | Reload behaviour |
+|----------------|------------------|
+| `open(html)` / `setHTML()` | Replays the remembered HTML string |
+| `loadFile(path)` | Re-reads the file from disk — on-disk edits are picked up |
+| Nothing loaded yet | Falls back to WebKit's own reload |
+
+Every trigger is covered — Cmd-R, View > Reload Page, the context menu, and `location.reload()` from page script — because the host intercepts the `.reload` navigation rather than relying on the menu item.
+
+Two consequences worth knowing:
+
+- Replaying inline HTML restores the **open-time snapshot**. State a page kept only in memory returns to its initial value. Persist through your host (for example Glimpse-APPs use `GappStore`, whose daemon pushes state back) if you need reload to survive edits.
+- A file source whose file disappeared keeps the current page rather than blanking the window.
+
+Linux and Windows load inline HTML the same way and still blank on reload; the replay is macOS-only for now.
 
 ### JavaScript Bridge (in-page)
 
@@ -401,7 +424,7 @@ Glimpse uses a newline-delimited JSON (JSON Lines) protocol over stdin/stdout. E
 {"type":"html","html":"<base64-encoded HTML>"}
 ```
 
-Inline HTML has no document URL, so the host remembers the string and replays it on reload (Cmd-R, View > Reload Page, context menu, or `location.reload()`). A reload never navigates to `about:blank`.
+Inline HTML has no document URL. On macOS the host remembers the string and replays it on reload (Cmd-R, View > Reload Page, context menu, or `location.reload()`), so a reload never navigates to `about:blank`.
 
 **Eval JavaScript** — Run JS in the WebView.
 ```json
@@ -415,7 +438,7 @@ Inline HTML has no document URL, so the host remembers the string and replays it
 {"type":"follow-cursor","enabled":false}
 ```
 
-**Load File** — Load a local HTML file by absolute path. Reload re-reads the file from disk, so edits on disk are picked up.
+**Load File** — Load a local HTML file by absolute path. On macOS, reload re-reads the file from disk, so edits on disk are picked up.
 ```json
 {"type":"file","path":"/path/to/page.html"}
 ```
@@ -611,6 +634,7 @@ The core protocol and Node.js API are identical across platforms. Some features 
 | Status item (menu bar / tray) | ✅ | — | ✅ | — |
 | Open links externally | ✅ | — | ✅ | — |
 | Hidden / prewarm | ✅ | ✅ | ✅ | ✅ |
+| Reload keeps inline HTML (no blank page) | ✅ | — | — | — |
 
 ## Performance
 
